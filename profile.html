@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Profile — Foodie</title>
+  <meta name="description" content="Your Foodie profile — posts, saved restaurants, followers and settings" />
+  <link rel="stylesheet" href="styles/main.css" />
+  <link rel="stylesheet" href="styles/profile.css" />
+</head>
+<body>
+<div class="app-wrapper">
+  <nav class="sidebar" id="sidebar"></nav>
+  <main class="main-content">
+
+    <!-- Profile Top Bar (Desktop Style) -->
+    <div class="profile-header-container">
+      <div class="profile-header-top">
+        <div class="profile-avatar-column">
+          <div class="profile-avatar-wrap">
+            <img class="profile-avatar" id="profileAvatar" src="" alt="Avatar" />
+          </div>
+        </div>
+
+        <div class="profile-info-column">
+          <div class="name-settings-row">
+            <div class="name-id-group">
+              <h1 class="profile-name" id="profileName">You (Demo User)</h1>
+              <span class="foodie-id">@foodie_you</span>
+            </div>
+            <div class="header-actions-group">
+              <button class="settings-gear-btn" onclick="openModal('settingsModal')" title="Settings">⚙️</button>
+              <div class="more-menu-container">
+                <button class="more-options-btn" onclick="toggleMoreMenu()" title="More Options">•••</button>
+                <div class="more-menu-dropdown" id="moreMenuDropdown">
+                  <div class="more-menu-item" onclick="switchTab('favorites'); toggleMoreMenu()">❤️ Favorites</div>
+                  <div class="more-menu-item" onclick="switchTab('liked-posts'); toggleMoreMenu()">🔖 Liked Posts</div>
+                  <div class="more-menu-item" onclick="showToast('Viewing Achievements','🏆'); toggleMoreMenu()">🏆 Achievements</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="profile-stats-row">
+            <div class="img-stat">
+              <span class="stat-num" id="statFollowers">1.8K</span>
+              <span class="stat-label">Followers</span>
+            </div>
+            <div class="img-stat">
+              <span class="stat-num" id="statFollowing">342</span>
+              <span class="stat-label">Following</span>
+            </div>
+            <div class="img-stat">
+              <span class="stat-num" id="statPosts">47</span>
+              <span class="stat-label">Reviews</span>
+            </div>
+            <div class="img-stat">
+              <span class="stat-num" id="statLikes">3.2K</span>
+              <span class="stat-label">❤️ Likes</span>
+            </div>
+          </div>
+
+          <div class="profile-badges-row">
+            <span class="img-badge"><span class="badge-icon">⚡</span> Food Influencer</span>
+            <span class="img-badge"><span class="badge-icon">🌮</span> Street Food Lover</span>
+            <span class="img-badge"><span class="badge-icon">✨</span> Top Reviewer</span>
+          </div>
+
+          <div class="profile-buttons-row">
+            <button class="btn-img-red" onclick="openModal('editProfileModal')">Edit Profile</button>
+            <button class="btn-img-dark" onclick="shareProfile()">Share Profile</button>
+          </div>
+
+          <p class="profile-bio" id="profileBio">Exploring the world one dish at a time 🌍 🍴 | NYC based</p>
+        </div>
+      </div>
+
+      <!-- Highlights Section -->
+      <div class="highlights-row">
+        <div class="highlight-circle-wrap add-new">
+          <div class="circle"><span>+</span></div>
+          <span class="label">New</span>
+        </div>
+        <div class="highlight-circle-wrap">
+          <div class="circle"><img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=100&h=100&fit=cover" alt=""></div>
+          <span class="label">Cafe Hops</span>
+        </div>
+        <div class="highlight-circle-wrap">
+          <div class="circle"><img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=100&h=100&fit=cover" alt=""></div>
+          <span class="label">Street Eats</span>
+        </div>
+        <div class="highlight-circle-wrap">
+          <div class="circle"><img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=100&h=100&fit=cover" alt=""></div>
+          <span class="label">Trips</span>
+        </div>
+      </div>
+
+      <!-- Achievements Card Section (Dashboard) - Visible in Spectator Mode -->
+      <div class="achievements-img-card" id="achievementsCard" style="display: none;">
+        <div class="card-top">
+          <span class="card-title">Achievements</span>
+          <span class="unlock-info">8/15 unlocked</span>
+        </div>
+        <div class="level-info-text">
+          <span class="path">Food Explorer → <span class="bold">Food Influencer</span></span>
+        </div>
+        <div class="img-progress-container">
+          <div class="img-progress-bar">
+            <div class="img-progress-fill" style="width: 45%;"></div>
+          </div>
+          <div class="xp-text">450 / 1000 XP</div>
+        </div>
+        <div class="mini-badges-grid">
+          <div class="mini-badge-box">🏅</div>
+          <div class="mini-badge-box">⭐️</div>
+          <div class="mini-badge-box">🔥</div>
+          <div class="mini-badge-box locked">🔒</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Profile Tabs -->
+    <div class="profile-tabs">
+      <button class="profile-tab active" data-tab="posts" onclick="switchTab('posts',this)">📸 Posts</button>
+      <button class="profile-tab" data-tab="favorites" onclick="switchTab('favorites',this)">❤️ Favorites</button>
+      <button class="profile-tab" data-tab="reviews" onclick="switchTab('reviews',this)">⭐ Reviews</button>
+      <button class="profile-tab" data-tab="diary" onclick="switchTab('diary',this)">📔 Diary</button>
+    </div>
+
+    <!-- Tab Content -->
+    <div class="profile-tab-content" id="tabContent"></div>
+  </main>
+</div>
+
+<!-- Edit Profile Modal -->
+<div class="modal-overlay" id="editProfileModal">
+  <div class="modal">
+    <div class="modal-inner-header">
+      <h3>Edit Profile</h3>
+      <button onclick="closeModal('editProfileModal')">✕</button>
+    </div>
+    <div class="modal-form">
+      <div class="form-group">
+        <label>Display Name</label>
+        <input type="text" class="input" id="editName" placeholder="Your name" />
+      </div>
+      <div class="form-group">
+        <label>Handle</label>
+        <input type="text" class="input" id="editHandle" placeholder="@username" />
+      </div>
+      <div class="form-group">
+        <label>Bio</label>
+        <textarea class="input" id="editBio" rows="3" placeholder="Tell people about yourself..."></textarea>
+      </div>
+      <div class="form-group">
+        <label>Website</label>
+        <input type="url" class="input" id="editWebsite" placeholder="https://..." />
+      </div>
+      <div style="display:flex;gap:10px;margin-top:16px">
+        <button class="btn btn-secondary" style="flex:1" onclick="closeModal('editProfileModal')">Cancel</button>
+        <button class="btn btn-primary" style="flex:1" onclick="saveProfile()">💾 Save Changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Settings Modal -->
+<div class="modal-overlay" id="settingsModal">
+  <div class="modal">
+    <div class="modal-inner-header">
+      <h3>⚙️ Settings</h3>
+      <button onclick="closeModal('settingsModal')">✕</button>
+    </div>
+    <div class="settings-content">
+      <div class="settings-section">
+        <h4 class="settings-section-title">Account</h4>
+        <div class="settings-item"><span>🔒 Change Password</span><span>›</span></div>
+        <div class="settings-item"><span>📧 Email Notifications</span><label class="toggle-switch"><input type="checkbox" checked /><span class="toggle-slider"></span></label></div>
+        <div class="settings-item"><span>📱 Push Notifications</span><label class="toggle-switch"><input type="checkbox" /><span class="toggle-slider"></span></label></div>
+      </div>
+      <div class="settings-section">
+        <h4 class="settings-section-title">Privacy</h4>
+        <div class="settings-item"><span>🔒 Private Account</span><label class="toggle-switch"><input type="checkbox" /><span class="toggle-slider"></span></label></div>
+        <div class="settings-item"><span>👁 Show Activity Status</span><label class="toggle-switch"><input type="checkbox" checked /><span class="toggle-slider"></span></label></div>
+        <div class="settings-item"><span>🗺 Show Location</span><label class="toggle-switch"><input type="checkbox" checked /><span class="toggle-slider"></span></label></div>
+      </div>
+      <div class="settings-section">
+        <h4 class="settings-section-title">Content</h4>
+        <div class="settings-item"><span>🌐 Language</span><select class="filter-select" style="width:auto;padding:4px 8px"><option>English</option><option>Hindi</option><option>Spanish</option></select></div>
+        <div class="settings-item"><span>📍 Default City</span><input type="text" class="input" style="width:120px;padding:6px 10px" placeholder="New York" /></div>
+      </div>
+      <div class="settings-section">
+        <h4 class="settings-section-title">Danger Zone</h4>
+        <div class="settings-item danger-item" onclick="showToast('This action is disabled in demo','⚠️')"><span>🗑 Delete Account</span><span>›</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Followers Modal -->
+<div class="modal-overlay" id="followersModal">
+  <div class="modal">
+    <div class="modal-inner-header"><h3>Followers</h3><button onclick="closeModal('followersModal')">✕</button></div>
+    <div class="user-list" id="followersList"></div>
+  </div>
+</div>
+
+<!-- Following Modal -->
+<div class="modal-overlay" id="followingModal">
+  <div class="modal">
+    <div class="modal-inner-header"><h3>Following</h3><button onclick="closeModal('followingModal')">✕</button></div>
+    <div class="user-list" id="followingList"></div>
+  </div>
+</div>
+
+<script src="js/app.js"></script>
+<script src="js/profile.js"></script>
+</body>
+</html>

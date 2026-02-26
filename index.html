@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Foodie — Social Food Reviews</title>
+  <meta name="description" content="Discover, rate, and share your favorite restaurant experiences with Foodie — the social food review platform." />
+  <link rel="stylesheet" href="styles/main.css" />
+  <link rel="stylesheet" href="styles/home.css" />
+</head>
+<body>
+<div class="app-wrapper">
+  <!-- Sidebar -->
+  <nav class="sidebar" id="sidebar"></nav>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <!-- Top Bar -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <h1 class="topbar-title">Your Feed</h1>
+        <span class="topbar-sub">What are your friends eating? 👀</span>
+      </div>
+      <div class="topbar-right">
+        <div class="input-group search-topbar">
+          <span class="input-icon">🔍</span>
+          <input type="text" class="input with-icon" placeholder="Search posts, restaurants..." id="feedSearch" />
+        </div>
+        <div id="headerAuthCTA">
+            <button class="btn btn-primary btn-sm" onclick="window.location.href='create-post.html'">✍️ New Review</button>
+        </div>
+      </div>
+    </header>
+
+    <div class="home-grid">
+      <!-- Centre: Stories + Feed -->
+      <div class="feed-column">
+        <!-- Stories -->
+        <section class="stories-section">
+          <div class="stories-scroll" id="storiesBar"></div>
+        </section>
+
+        <!-- Feed Tabs (For You, Following, Liked, Saved) -->
+        <div class="feed-tabs" id="feedTabs"></div>
+
+        <!-- Feed -->
+        <section class="feed" id="feed"></section>
+      </div>
+
+      <!-- Right: Sidebar widgets -->
+      <aside class="right-panel">
+        <div class="widget">
+          <h3 class="widget-title">🔥 Trending Spots</h3>
+          <div id="trendingRestaurants"></div>
+        </div>
+        <div class="widget">
+          <h3 class="widget-title">👥 Suggested Foodies</h3>
+          <div id="suggestedUsers"></div>
+        </div>
+      </aside>
+    </div>
+  </main>
+</div>
+
+<!-- Story View Modal -->
+<div class="modal-overlay" id="storyModal">
+  <div class="story-viewer">
+    <div class="story-progress-bar"><div class="story-progress" id="storyProgress"></div></div>
+    <div class="story-header">
+      <img class="avatar avatar-sm" id="storyAvatar" src="" alt="" />
+      <div class="story-user-info">
+        <span id="storyUsername" class="fw-600"></span>
+        <span id="storyTime" class="text-muted" style="font-size:11px"></span>
+      </div>
+      <button class="btn-icon" onclick="closeStory()">✕</button>
+    </div>
+    <img id="storyImage" src="" alt="story" class="story-image" />
+    <div class="story-caption" id="storyCaption"></div>
+  </div>
+
+<script src="js/app.js"></script>
+<script src="js/guest.js"></script>
+<script src="js/home.js"></script>
+</body>
+</html>

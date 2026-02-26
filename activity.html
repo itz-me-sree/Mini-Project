@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Activity — Foodie</title>
+  <meta name="description" content="View your latest notifications, likes, comments and new followers." />
+  <link rel="stylesheet" href="styles/main.css" />
+  <link rel="stylesheet" href="styles/activity.css" />
+</head>
+<body>
+<div class="app-wrapper">
+  <nav class="sidebar" id="sidebar"></nav>
+  <main class="main-content">
+    <header class="activity-header">
+      <div class="activity-header-left">
+        <h1 class="activity-title">Activity</h1>
+        <p class="activity-sub">Notifications and interactions</p>
+      </div>
+      <button class="btn btn-ghost btn-sm" onclick="markAllAsRead()">Mark all as read</button>
+    </header>
+
+    <div class="activity-tabs">
+      <button class="activity-tab active" onclick="filterActivity('all')">All</button>
+      <button class="activity-tab" onclick="filterActivity('likes')">Likes</button>
+      <button class="activity-tab" onclick="filterActivity('comments')">Comments</button>
+      <button class="activity-tab" onclick="filterActivity('mentions')">Mentions</button>
+      <button class="activity-tab" onclick="filterActivity('follows')">New Followers</button>
+    </div>
+
+    <section class="activity-list" id="activityList">
+      <!-- Activity items will be rendered here -->
+    </section>
+  </main>
+</div>
+
+<script src="js/app.js"></script>
+<script src="js/activity.js"></script>
+</body>
+</html>
