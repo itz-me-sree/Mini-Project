@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title id="pageTitle">Restaurant — Foodie</title>
+  <meta name="description" content="View restaurant details, reviews, gallery and more." />
+  <link rel="stylesheet" href="styles/main.css" />
+  <link rel="stylesheet" href="styles/restaurant.css" />
+</head>
+<body>
+<div class="app-wrapper">
+  <nav class="sidebar" id="sidebar"></nav>
+
+  <main class="main-content resto-main">
+
+    <!-- ══ 1. HERO ══════════════════════════════════════════════ -->
+    <section id="hero" class="resto-hero">
+      <div class="hero-cover-wrap">
+        <img id="heroCover" src="" alt="Restaurant cover" class="hero-cover-img" />
+        <div class="hero-cover-gradient"></div>
+        <button class="hero-back-btn" onclick="window.history.back()">←</button>
+        
+        <!-- Overlaid Profile Info -->
+        <div class="hero-overlay-content">
+          <div class="hero-name-row">
+            <div>
+              <h1 class="hero-name" id="heroName">Loading...</h1>
+              <div class="hero-location" id="heroLocation"><span>📍</span> <span id="heroLocationText"></span></div>
+            </div>
+            <div class="hero-rating-badge">
+              <span class="hero-rating-star">⭐</span>
+              <span class="hero-rating-num" id="heroRating">—</span>
+            </div>
+          </div>
+          <div class="hero-review-count" id="heroReviewCount"></div>
+
+          <!-- Action buttons within overlay -->
+          <div class="hero-actions" id="heroActions">
+            <button class="hero-action-btn" id="rateBtn" onclick="document.getElementById('write-review').scrollIntoView({behavior:'smooth'})">
+              <span>⭐</span> Rate
+            </button>
+            <button class="hero-action-btn" id="saveBtn" onclick="handleToggleSave()">
+              <span id="saveBtnIcon">🤍</span> <span id="saveBtnText">Favourite</span>
+            </button>
+            <button class="hero-action-btn" onclick="shareRestaurant()">
+              <span>🔗</span> Share
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ 2. INFO ═══════════════════════════════════════════════ -->
+    <section id="info" class="resto-section">
+      <h2 class="section-heading">📌 Info</h2>
+      <div class="info-grid" id="infoGrid">
+        <div class="info-card">
+          <div class="info-label">📌 Address</div>
+          <div class="info-value" id="infoAddress">—</div>
+        </div>
+        <div class="info-card">
+          <div class="info-label">🕒 Hours</div>
+          <div class="info-value" id="infoHours">—</div>
+        </div>
+        <div class="info-card">
+          <div class="info-label">📞 Phone</div>
+          <div class="info-value" id="infoPhone">—</div>
+        </div>
+        <div class="info-card">
+          <div class="info-label">🌐 Website</div>
+          <div class="info-value" id="infoWebsite">—</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ 3. GALLERY ════════════════════════════════════════════ -->
+    <section id="gallery" class="resto-section">
+      <div class="section-header-row">
+        <h2 class="section-heading">📸 Gallery</h2>
+        <button class="btn btn-primary btn-sm" onclick="document.getElementById('photoUploadInput').click()">+ Add Photo</button>
+      </div>
+      <input type="file" id="photoUploadInput" accept="image/*" style="display:none" onchange="handlePhotoUpload(this)" />
+      <div class="gallery-grid" id="galleryGrid">
+        <div class="gallery-empty">No photos yet. Be the first to add one!</div>
+      </div>
+      <button class="load-more-btn" id="galleryMoreBtn" style="display:none" onclick="showAllPhotos()">View All Photos</button>
+    </section>
+
+    <!-- ══ 4. STATS ══════════════════════════════════════════════ -->
+    <section id="stats" class="resto-section">
+      <h2 class="section-heading">Customer Ratings &amp; Reviews</h2>
+      <div class="stats-card">
+        <div class="stats-left-card">
+          <div class="stats-avg-big" id="statsAvg">—<span class="stats-avg-star">★</span></div>
+          <div class="stats-total-label" id="statsTotalLabel">0 ratings<br/>0 reviews</div>
+        </div>
+        <div class="stats-right">
+          <div id="statsBars"></div>
+          <div class="stats-meta-row">
+            <span id="statsTotalPhotos">0 photos</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ 5. WRITE REVIEW ═══════════════════════════════════════ -->
+    <section id="write-review" class="resto-section">
+      <h2 class="section-heading">✍️ Write a Review</h2>
+      <div class="write-review-card" id="writeReviewCard">
+        <div class="review-author-row">
+          <img class="avatar avatar-sm wr-avatar" id="writerAvatar" src="https://i.pravatar.cc/150?img=68" alt="" />
+          <div>
+            <div class="wr-name" id="writerName">You</div>
+            <!-- Star Picker -->
+            <div class="star-picker" id="starPicker">
+              <span class="star-pick" data-val="1" onclick="selectStar(1)">☆</span>
+              <span class="star-pick" data-val="2" onclick="selectStar(2)">☆</span>
+              <span class="star-pick" data-val="3" onclick="selectStar(3)">☆</span>
+              <span class="star-pick" data-val="4" onclick="selectStar(4)">☆</span>
+              <span class="star-pick" data-val="5" onclick="selectStar(5)">☆</span>
+            </div>
+          </div>
+        </div>
+        <textarea class="review-textarea" id="reviewText" placeholder="Share your experience at this restaurant..." rows="4"></textarea>
+        <div class="review-actions-row">
+          <label class="review-img-label">
+            📷 Add Photo
+            <input type="file" id="reviewImageInput" accept="image/*" style="display:none" onchange="previewReviewImage(this)" />
+          </label>
+          <img id="reviewImgPreview" src="" alt="" style="display:none; width:60px; height:60px; object-fit:cover; border-radius:8px;" />
+          <button class="btn btn-primary" onclick="submitReview()">Post Review</button>
+        </div>
+      </div>
+      <div id="guestReviewPrompt" style="display:none" class="guest-prompt">
+        <p>🔒 <a href="login.html">Login</a> to write a review</p>
+      </div>
+    </section>
+
+    <!-- ══ 6. REVIEWS ════════════════════════════════════════════ -->
+    <section id="reviews" class="resto-section">
+      <div class="section-header-row">
+        <h2 class="section-heading">💬 Reviews</h2>
+        <select class="filter-select-sm" id="reviewFilter" onchange="loadReviews()">
+          <option value="smart">Smart Priority</option>
+          <option value="friends">Friends First</option>
+          <option value="top">Top Users</option>
+          <option value="liked">Most Liked</option>
+          <option value="newest">Newest</option>
+          <option value="oldest">Oldest</option>
+        </select>
+      </div>
+      <div id="reviewsList">
+        <div class="loading-pill">Loading reviews...</div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script src="js/app.js"></script>
+<script src="js/guest.js"></script>
+<script src="js/restaurant.js"></script>
+</body>
+</html>

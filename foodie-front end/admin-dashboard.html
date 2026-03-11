@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Foodie Admin | Control Panel</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+    <div class="admin-layout">
+
+        <!-- ── Sidebar ── -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-box">
+                    <div class="logo-circle">🍴</div>
+                    <span class="logo-text">Foodie Admin</span>
+                </div>
+                <button class="btn-icon-small" id="toggleSidebar" title="Toggle Sidebar">☰</button>
+            </div>
+
+            <nav class="nav-menu">
+                <span class="nav-label">Management</span>
+                <a href="#" class="nav-item active" data-section="dashboard" data-title="Dashboard">
+                    <span class="nav-icon">📊</span>
+                    <span class="nav-text">Dashboard</span>
+                </a>
+                <a href="#" class="nav-item" data-section="users" data-title="Users">
+                    <span class="nav-icon">👥</span>
+                    <span class="nav-text">Users</span>
+                </a>
+                <a href="#" class="nav-item" data-section="posts" data-title="Posts">
+                    <span class="nav-icon">📝</span>
+                    <span class="nav-text">Posts</span>
+                </a>
+                <a href="#" class="nav-item" data-section="restaurants" data-title="Restaurants">
+                    <span class="nav-icon">🏪</span>
+                    <span class="nav-text">Restaurants</span>
+                </a>
+                <a href="#" class="nav-item" data-section="reports" data-title="Reports">
+                    <span class="nav-icon">🚩</span>
+                    <span class="nav-text">Reports</span>
+                </a>
+
+                <div class="sidebar-logout">
+                    <button class="nav-item logout-btn" id="logoutBtn">
+                        <span class="nav-icon">🚪</span>
+                        <span class="nav-text">Logout</span>
+                    </button>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- ── Main Content Area ── -->
+        <main class="main-content">
+
+            <!-- Topbar -->
+            <header class="topbar">
+                <div class="topbar-title" id="topbarTitle">Dashboard</div>
+                <div class="topbar-admin">
+                    <span class="topbar-admin-name">Admin</span>
+                </div>
+            </header>
+
+            <!-- Content Area -->
+            <div class="view-area" id="viewArea">
+                <div class="loader">Loading...</div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Confirm Modal -->
+    <div class="modal-overlay" id="confirmModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 id="confirmTitle">Confirm Action</h2>
+            </div>
+            <p id="confirmMessage" style="color: var(--text-secondary); margin-bottom: 32px;">Are you sure?</p>
+            <div style="display: flex; gap: 12px; justify-content: flex-end;">
+                <button class="btn" style="background: var(--bg-hover);" id="cancelAction">Cancel</button>
+                <button class="btn btn-primary" id="proceedAction">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Restaurant Modal -->
+    <div class="modal-overlay" id="restaurantModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>Add Restaurant</h2>
+            </div>
+            <form id="restaurantForm">
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" class="form-control" name="name" required placeholder="e.g. Sushi Zen">
+                </div>
+                <div class="form-group">
+                    <label>Cuisine</label>
+                    <input type="text" class="form-control" name="cuisine" required placeholder="e.g. Japanese">
+                </div>
+                <div class="form-group">
+                    <label>Address</label>
+                    <input type="text" class="form-control" name="address" required placeholder="123 Food Street">
+                </div>
+                <div style="display: flex; gap: 12px; justify-content: flex-end; margin-top: 24px;">
+                    <button type="button" class="btn" style="background: var(--bg-hover);" id="closeRestaurantModal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Add Restaurant</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+</html>

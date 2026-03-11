@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Profile — Foodie</title>
+  <meta name="description" content="Your Foodie profile — posts, saved restaurants, followers and settings" />
+  <link rel="stylesheet" href="styles/main.css" />
+  <link rel="stylesheet" href="styles/profile.css" />
+</head>
+<body>
+<div class="app-wrapper">
+  <nav class="sidebar" id="sidebar"></nav>
+  <main class="main-content">
+
+    <!-- Profile Top Bar (Desktop Style) -->
+    <div class="profile-header-container">
+      <div class="profile-header-top">
+        <div class="profile-avatar-column">
+          <div class="profile-avatar-wrap">
+            <img class="profile-avatar" id="profileAvatar" src="" alt="Avatar" />
+          </div>
+        </div>
+
+        <div class="profile-info-column">
+          <div class="name-settings-row">
+            <div class="name-id-group">
+                <h1 class="profile-name" id="profileName">You (Demo User)</h1>
+                <span class="foodie-id">@foodie_you</span>
+            </div>
+            <div class="header-actions-group">
+                <button class="settings-gear-btn" onclick="openModal('settingsModal')" title="Settings">⚙️</button>
+            </div>
+          </div>
+          
+          <p class="profile-bio" id="profileBio">Exploring the world one dish at a time 🌍 🍴 | NYC based</p>
+
+          <div class="profile-stats-row">
+            <div class="img-stat">
+              <span class="stat-num" id="statFollowers">1.8K</span>
+              <span class="stat-label">Followers</span>
+            </div>
+            <div class="stat-divider">|</div>
+            <div class="img-stat">
+              <span class="stat-num" id="statFollowing">342</span>
+              <span class="stat-label">Following</span>
+            </div>
+            <div class="stat-divider">|</div>
+            <div class="img-stat">
+              <span class="stat-num" id="statPosts">47</span>
+              <span class="stat-label">Reviews</span>
+            </div>
+            <div class="stat-divider">|</div>
+            <div class="img-stat">
+              <span class="stat-num" id="statLikes">3.2K</span>
+              <span class="stat-label">Likes</span>
+            </div>
+          </div>
+
+          <div class="profile-badges-row" id="headerBadges"></div>
+
+          <div class="profile-buttons-row">
+            <button class="btn-img-red" onclick="openModal('editProfileModal')">Edit Profile</button>
+            <button class="btn-img-dark" onclick="shareProfile()">Share Profile</button>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+    <!-- Level Card -->
+    <div class="level-card" id="levelCard">
+      <div class="level-card-progression">
+        <div class="level-watermark" id="levelWatermark">01</div>
+        
+        <div class="progression-content-wrap">
+          <div class="progression-main-info">
+            <div class="level-identity-group">
+              <div class="level-badge-large">
+                <span class="level-val" id="levelNumber">1</span>
+                <span class="level-label">LVL</span>
+              </div>
+              <div class="level-text-group">
+                <h3 class="level-name-title" id="levelTitle">Newcomer</h3>
+                <p class="level-xp-needed" id="levelXpNeeded">+22 XP to reach Explorer</p>
+              </div>
+            </div>
+
+            <div class="next-level-preview">
+              <span class="next-target-label">NEXT LEVEL</span>
+              <span class="next-target-name" id="levelNextTitle">Explorer</span>
+            </div>
+          </div>
+
+          <div class="progression-bar-area">
+            <div class="xp-data-row">
+              <span class="xp-current-count" id="levelXpProgress">78 / 100 XP</span>
+              <span class="xp-percent-val" id="levelXpPercent">78%</span>
+            </div>
+            <div class="progression-track-sleek">
+              <div class="progression-fill-glow" id="levelProgressFill" style="width: 0%"></div>
+            </div>
+          </div>
+
+          <div class="progression-footer">
+            <a href="javascript:void(0)" class="view-levels-link" onclick="showToast('Level Map coming soon!', '📈')">View All Levels →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Achievements Section -->
+    <div class="achievements-section" id="achievementsSection">
+      <div class="achievements-header">
+        <h2 class="achievements-title">Achievements</h2>
+        <p class="achievements-subtitle">Unlock badges by being active and consistent.</p>
+      </div>
+      <div id="achievementsGrid"></div>
+      <button class="show-locked-btn" id="showLockedBtn" onclick="toggleLockedBadges()">
+        <span id="lockedBtnText">Show Locked Achievements</span>
+        <span class="locked-btn-arrow" id="lockedBtnArrow">▾</span>
+      </button>
+      <div class="locked-badges-container" id="lockedBadgesContainer"></div>
+    </div>
+
+    <!-- Level Up Popup -->
+    <div class="level-up-popup" id="levelUpPopup">
+      <div class="level-up-inner">
+        <span class="level-up-emoji">🎉</span>
+        <span class="level-up-text" id="levelUpText">Level Up! You are now Level 2 – Explorer</span>
+      </div>
+    </div>
+
+    <!-- Profile Tabs -->
+    <div class="profile-tabs">
+      <div class="tab-indicator" id="tabIndicator"></div>
+      <button class="profile-tab active" data-tab="posts" onclick="switchTab('posts',this)">📸 Posts</button>
+      <button class="profile-tab" data-tab="liked" onclick="switchTab('liked',this)">❤️ Liked</button>
+      <button class="profile-tab" data-tab="saved" onclick="switchTab('saved',this)">🔖 Saved</button>
+      <button class="profile-tab" data-tab="reviews" onclick="switchTab('reviews',this)">⭐ Reviews</button>
+    </div>
+
+    <!-- Tab Content -->
+    <div class="profile-tab-content" id="tabContent"></div>
+  </main>
+</div>
+
+<!-- Edit Profile Modal -->
+<div class="modal-overlay" id="editProfileModal">
+  <div class="modal">
+    <div class="modal-inner-header">
+      <h3>Edit Profile</h3>
+      <button onclick="closeModal('editProfileModal')">✕</button>
+    </div>
+    <div class="modal-form">
+      <div class="form-group" style="align-items:center; margin-bottom:24px;">
+        <div class="profile-avatar-edit-wrap" style="position:relative; width:100px; height:100px;">
+          <img id="editAvatarPreview" src="" style="width:100%; height:100%; border-radius:50%; object-fit:cover; border:2px solid var(--img-red);">
+          <div class="avatar-edit-overlay" onclick="document.getElementById('profilePicInput').click()" style="position:absolute; inset:0; background:rgba(0,0,0,0.5); border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; opacity:0; transition:0.3s;">
+            <span style="font-size:20px;">📷</span>
+          </div>
+          <style> .profile-avatar-edit-wrap:hover .avatar-edit-overlay { opacity:1; } </style>
+        </div>
+        <input type="file" id="profilePicInput" style="display:none;" accept="image/*" onchange="previewProfilePic(this)">
+        <span style="font-size:12px; color:var(--text-muted); margin-top:8px;">Click to change photo</span>
+      </div>
+      <div class="form-group">
+        <label>Display Name</label>
+        <input type="text" class="input" id="editName" placeholder="Your name" />
+      </div>
+      <div class="form-group">
+        <label>Handle</label>
+        <input type="text" class="input" id="editHandle" placeholder="@username" />
+      </div>
+      <div class="form-group">
+        <label>Bio</label>
+        <textarea class="input" id="editBio" rows="3" placeholder="Tell people about yourself..."></textarea>
+      </div>
+      <div style="display:flex;gap:10px;margin-top:16px">
+        <button class="btn btn-secondary" style="flex:1" onclick="closeModal('editProfileModal')">Cancel</button>
+        <button class="btn btn-primary" style="flex:1" onclick="saveProfile()">💾 Save Changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Settings Modal -->
+<div class="modal-overlay" id="settingsModal">
+  <div class="modal">
+  <div class="modal">
+    <div class="modal-inner-header">
+      <h3>⚙️ Settings</h3>
+      <button onclick="closeModal('settingsModal')">✕</button>
+    </div>
+    <div class="settings-content">
+      <div class="settings-section">
+        <h4 class="settings-section-title">Preference</h4>
+        <div class="settings-item">
+          <span>🌓 Dark Mode</span>
+          <label class="toggle-switch">
+            <input type="checkbox" id="themeToggle" checked onchange="toggleTheme(this)" />
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+      </div>
+
+      <div class="settings-section">
+        <h4 class="settings-section-title">Privacy & Location</h4>
+        <div class="settings-item">
+          <span>🔒 Private Account</span>
+          <label class="toggle-switch">
+            <input type="checkbox" id="privateAccountToggle" onchange="updateSetting('privateAccount', this.checked)" />
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+        <div class="settings-item">
+          <span>🗺 Show Location</span>
+          <label class="toggle-switch">
+            <input type="checkbox" id="showLocationToggle" checked onchange="updateSetting('showLocation', this.checked)" />
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+        <div class="settings-item">
+          <span>📍 Default City</span>
+          <input type="text" class="input" id="defaultCityInput" style="width:120px;padding:6px 10px" placeholder="New York" onchange="updateSetting('defaultCity', this.value)" />
+        </div>
+      </div>
+
+      <div class="settings-section">
+        <h4 class="settings-section-title">Account Security</h4>
+        <div class="settings-item" onclick="openModal('changePasswordModal')" style="cursor:pointer">
+          <span>🔑 Change Password</span>
+          <span>›</span>
+        </div>
+      </div>
+
+      <div class="settings-section">
+        <h4 class="settings-section-title">Danger Zone</h4>
+        <div class="settings-item danger-item" onclick="confirmDeleteAccount()" style="cursor:pointer">
+          <span>🗑 Delete Account</span>
+          <span>›</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Change Password Modal -->
+<div class="modal-overlay" id="changePasswordModal">
+  <div class="modal">
+    <div class="modal-inner-header">
+      <h3>🔒 Change Password</h3>
+      <button onclick="closeModal('changePasswordModal')">✕</button>
+    </div>
+    <div class="modal-form">
+      <div class="form-group">
+        <label>Current Password</label>
+        <input type="password" class="input" id="currentPassword" placeholder="••••••••" />
+      </div>
+      <div class="form-group">
+        <label>New Password</label>
+        <input type="password" class="input" id="newPassword" placeholder="••••••••" />
+      </div>
+      <div class="form-group">
+        <label>Confirm New Password</label>
+        <input type="password" class="input" id="confirmNewPassword" placeholder="••••••••" />
+      </div>
+      <div style="display:flex;gap:10px;margin-top:16px">
+        <button class="btn btn-secondary" style="flex:1" onclick="closeModal('changePasswordModal')">Cancel</button>
+        <button class="btn btn-primary" style="flex:1" onclick="handlePasswordChange()">Update Password</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Followers Modal -->
+<div class="modal-overlay" id="followersModal">
+  <div class="modal">
+    <div class="modal-inner-header"><h3>Followers</h3><button onclick="closeModal('followersModal')">✕</button></div>
+    <div class="user-list" id="followersList"></div>
+  </div>
+</div>
+
+<!-- Following Modal -->
+<div class="modal-overlay" id="followingModal">
+  <div class="modal">
+    <div class="modal-inner-header"><h3>Following</h3><button onclick="closeModal('followingModal')">✕</button></div>
+    <div class="user-list" id="followingList"></div>
+  </div>
+</div>
+
+<script src="js/app.js"></script>
+<script src="js/profile.js"></script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+# Dependencies
+node_modules/
+foodie-backend/node_modules/
+"foodie-front end/node_modules/"
+
+# Environment variables
+.env
+foodie-backend/.env
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# VS Code settings
+.vscode/
+
+# Logs
+*.log
+foodie-backend/*.log
+
+# Project specific
+foodie-backend/uploads/

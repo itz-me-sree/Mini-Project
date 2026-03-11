@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>View Review | Foodie</title>
+  <link rel="stylesheet" href="styles/main.css" />
+  <link rel="stylesheet" href="styles/home.css" />
+  <link rel="stylesheet" href="styles/post.css" />
+</head>
+<body>
+<div class="app-wrapper">
+  <!-- Sidebar -->
+  <nav class="sidebar" id="sidebar"></nav>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <!-- Top Bar -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="btn-icon" onclick="window.history.back()" style="margin-right: 12px; transform: scale(1.2)">←</button>
+        <h1 class="topbar-title">Review Detail</h1>
+      </div>
+      <div class="topbar-right">
+        <div id="headerAuthCTA">
+            <button class="btn btn-primary btn-sm" onclick="window.location.href='create-post.html'">✍️ New Review</button>
+        </div>
+      </div>
+    </header>
+
+    <div class="post-page-container">
+      <div class="post-vertical-layout">
+        <!-- 1. Header: Author Info -->
+        <header class="post-v-header">
+           <div class="author-block">
+              <img class="avatar avatar-md" id="authorAvatar" src="" alt="" />
+              <div class="author-info">
+                 <div id="authorName" class="fw-700"></div>
+                 <div id="postLocation" class="text-muted"></div>
+              </div>
+           </div>
+           
+           <!-- Optional Options Menu (Top Right) -->
+           <div class="post-options-container" id="postOptionsContainer" style="display: none; position: relative;">
+               <button class="btn-icon" id="postOptionsBtn" style="color: var(--text-muted); padding: 4px;">
+                   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-more-horizontal"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
+               </button>
+               <div class="options-dropdown-menu" id="postOptionsMenu" style="display: none;">
+                   <div class="dropdown-item" id="editPostOption">
+                       <span style="margin-right:8px;">✏️</span> Edit Review
+                   </div>
+                   <div class="dropdown-item danger-item" id="deletePostOption" style="color: var(--brand-accent);">
+                       <span style="margin-right:8px;">🗑️</span> Delete Post
+                   </div>
+               </div>
+           </div>
+        </header>
+
+        <!-- 2. Main Image -->
+        <div class="post-v-visuals">
+          <img id="postImage" src="" alt="Post Detail" class="post-main-img" />
+        </div>
+
+        <!-- 3. Actions & Stats -->
+        <div class="post-v-actions-panel">
+          <div class="post-actions" id="postActionsRow">
+            <!-- Actions injected here -->
+          </div>
+          <div class="post-stats">
+            <span id="likeCountDisplay" class="fw-700"></span> likes
+          </div>
+        </div>
+
+        <!-- 4. Caption Area -->
+        <div class="post-v-caption-section">
+           <p class="post-caption-text">
+             <strong id="authorHandle"></strong> <span id="postCaptionText"></span>
+           </p>
+           <span class="post-time-meta" id="postTimestamp"></span>
+        </div>
+
+        <!-- 5. Comments Section -->
+        <div class="post-v-comments-section">
+           <h3 class="section-title">Comments</h3>
+           
+           <div class="comments-blur-container">
+              <div id="commentsList" class="comments-list">
+                <!-- Comments injected here -->
+              </div>
+              
+              <!-- Guest Blur Overlay -->
+              <div id="guestBlurOverlay" class="comments-blur-overlay" style="display:none;">
+                <div class="blur-content">
+                  <div class="guest-modal-icon">🔒</div>
+                  <h3>Community Discussion</h3>
+                  <p>Login to view full comments and join the conversation!</p>
+                  <div style="display:flex; gap:10px; justify-content:center;">
+                      <a href="login.html" class="btn btn-primary btn-sm">Login</a>
+                      <a href="signup.html" class="btn btn-secondary btn-sm">Sign Up</a>
+                  </div>
+                </div>
+              </div>
+           </div>
+        </div>
+
+        <!-- 6. Bottom Interaction (Sticky maybe, but let's flow for now) -->
+        <div class="post-v-footer">
+           <div class="comment-input-area">
+              <img id="currentUserAvatar" class="avatar avatar-sm" src="" alt="Me" style="width:32px; height:32px; border-radius:50%; margin-right:10px; display:none;" />
+              <button class="emoji-btn">😊</button>
+              <input class="post-comment-input" placeholder="Add a comment..." id="postCommentInput" />
+              <button class="comment-post-btn" id="postCommentSubmit">Post</button>
+           </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- Report Confirmation Modal -->
+<div id="reportModal" class="modal-overlay">
+  <div class="modal report-modal">
+    <div class="modal-header">
+      <h3 id="reportModalTitle">Report Content</h3>
+      <button class="modal-close" onclick="closeReportModal()">&times;</button>
+    </div>
+    <div class="modal-body">
+      <p id="reportModalDesc" style="margin-bottom: 20px; color: var(--text-secondary);">Are you sure you want to report this? Please provide a reason below.</p>
+      <div class="input-group" style="margin-bottom: 20px;">
+        <textarea id="reportReasonInput" class="input" placeholder="Enter reason for reporting..." style="min-height: 100px; resize: vertical;"></textarea>
+      </div>
+    </div>
+    <div class="modal-footer" style="display: flex; gap: 12px; justify-content: flex-end; padding-top: 20px; border-top: 1px solid var(--border-subtle);">
+      <button class="btn btn-secondary" onclick="closeReportModal()">Cancel</button>
+      <button class="btn btn-primary" id="submitReportBtn">Report</button>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Post Modal -->
+<div id="editPostModal" class="modal-overlay">
+  <div class="modal edit-modal">
+    <div class="modal-header">
+      <h3 id="editModalTitle">Edit Review</h3>
+      <button class="modal-close" onclick="closeEditModal()">&times;</button>
+    </div>
+    <div class="modal-body" style="padding: 24px;">
+      <div class="input-group">
+        <label for="editCaptionInput" style="display:block; margin-bottom: 8px; font-weight: 600; font-size: 13px; color: var(--text-secondary);">Caption</label>
+        <textarea id="editCaptionInput" class="input" placeholder="Update your review..." style="width: 100%; min-height: 120px; resize: vertical; background: var(--bg-dark); color: var(--text-primary); border: 1px solid var(--border-mild); border-radius: 8px; padding: 12px;"></textarea>
+      </div>
+    </div>
+    <div class="modal-footer" style="display: flex; gap: 12px; justify-content: flex-end; padding: 16px 24px; background: var(--bg-card-2); border-top: 1px solid var(--border-subtle);">
+      <button class="btn btn-secondary" onclick="closeEditModal()">Cancel</button>
+      <button class="btn btn-primary" id="saveEditBtn">Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<script src="js/app.js"></script>
+<script src="js/guest.js"></script>
+<script src="js/post.js"></script>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Foodie — Social Food Reviews</title>
+  <meta name="description" content="Discover, rate, and share your favorite restaurant experiences with Foodie — the social food review platform." />
+  <link rel="stylesheet" href="styles/main.css" />
+  <link rel="stylesheet" href="styles/home.css" />
+</head>
+<body>
+<div class="app-wrapper">
+  <!-- Sidebar -->
+  <nav class="sidebar" id="sidebar"></nav>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <!-- Top Bar -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <h1 class="topbar-title">Your Feed</h1>
+        <span class="topbar-sub">What are your friends eating? 👀</span>
+      </div>
+      <div class="topbar-right">
+        <div class="input-group search-topbar">
+          <span class="input-icon">🔍</span>
+          <input type="text" class="input with-icon" placeholder="Search posts, restaurants..." id="feedSearch" autocomplete="off" />
+          <div id="searchResults" class="search-results-dropdown"></div>
+        </div>
+        <div id="headerAuthCTA">
+            <button class="btn btn-primary btn-sm" onclick="window.location.href='create-post.html'">✍️ New Review</button>
+        </div>
+      </div>
+    </header>
+
+    <div class="home-grid">
+      <!-- Centre: Feed -->
+      <div class="feed-column">
+
+        <!-- Feed Tabs (For You, Following, Liked, Saved) -->
+        <div class="feed-tabs" id="feedTabs"></div>
+
+        <!-- Feed -->
+        <section class="feed" id="feed"></section>
+      </div>
+
+      <!-- Right: Sidebar widgets -->
+      <aside class="right-panel">
+        <div class="widget">
+          <h3 class="widget-title">🔥 Trending Spots</h3>
+          <div id="trendingRestaurants"></div>
+        </div>
+        <div class="widget">
+          <h3 class="widget-title">👥 Suggested Foodies</h3>
+          <div id="suggestedUsers"></div>
+        </div>
+      </aside>
+    </div>
+  </main>
+</div>
+
+
+
+<script src="js/app.js"></script>
+<script src="js/guest.js"></script>
+<script src="js/home.js"></script>
+</body>
+</html>
